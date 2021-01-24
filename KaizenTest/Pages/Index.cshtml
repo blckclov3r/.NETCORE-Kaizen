@@ -1,0 +1,88 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<style>
+
+    .hide {
+        display: none;
+    }
+</style>
+
+
+<div class="form-group text-center jumbotron pt-0 mt-0">
+    <h1>Index Page</h1>
+    <p>Kaizen Demo</p>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-sm mt-4" data-toggle="modal" data-target="#exampleModal">
+        Add ToDo
+    </button>
+</div>
+
+
+
+
+<table class="table table-striped table-hover mt-5">
+    <thead>
+        <tr>
+            <th>ToDo</th>
+            <th class="text-center">Status</th>
+            <th class="text-right pr-2">Option</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.todoList)
+        {
+            <tr>
+                <td>@item.todoDesc</td>
+                <td class="text-center">@item.isCompleted</td>
+                <td class="text-right pr-2">
+                    <a class="btn btn-sm btn-warning" asp-page="./Edit" asp-route-id="@item.ID">
+                        Edit
+                    </a>
+                    <a class="btn btn-sm btn-danger" asp-page="./Delete" asp-route-id="@item.ID">
+                        Delete
+                    </a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label asp-for="Todo.todoDesc"></label>
+                        <input asp-for="Todo.todoDesc" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Todo.isCompleted"></label>
+                        <input asp-for="Todo.isCompleted" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                    <button id="@Model.loaderID" type="submit" class="btn btn-warning btn-sm">
+                        <i class="loading-icon fa fa-refresh fa-spin hide"></i> Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
