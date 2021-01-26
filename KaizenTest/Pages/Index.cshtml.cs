@@ -3,10 +3,8 @@ using KaizenTest.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace KaizenTest.Pages
 {
@@ -21,16 +19,12 @@ namespace KaizenTest.Pages
             this._context = _context;
         }
 
-       
-
-
-        [BindProperty(SupportsGet =true)]
+        [BindProperty(SupportsGet = true)]
         public Todo Todo { get; set; }
 
         public List<Todo> todoList { get; set; }
 
         public string loaderID { get; set; }
-
 
         public IActionResult OnGet()
         {
@@ -38,27 +32,22 @@ namespace KaizenTest.Pages
 
             loaderID = "btnLoader";
 
-
             return Page();
         }
 
-
         public IActionResult OnPost()
         {
-            var newTodo = new Todo
+            Todo newTodo = new Todo
             {
-               todoDesc = Todo.todoDesc,
-               isCompleted = Todo.isCompleted
-
+                todoDesc = Todo.todoDesc,
+                isCompleted = Todo.isCompleted
             };
 
             _context.Todos.Add(newTodo);
-        
+
             _context.SaveChanges();
 
-             return RedirectToPage();
+            return RedirectToPage();
         }
-
-    
     }
 }
